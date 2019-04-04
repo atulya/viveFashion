@@ -4,15 +4,14 @@ class Login extends MY_Controller {
 
     public function __construct() {
         parent::__construct();
+        if ($this->session->userdata('admin_id') != "") {
+            redirect(base_url('admin/products'));
+        }
         $this->load->library('form_validation');
     }
 
     public function index() {
-        if ($this->session->userdata('admin_id') != "") {
-            redirect(base_url('admin/login'));
-        } else {
-            $this->load->view('admin/login/index');
-        }
+        $this->load->view('admin/login/index');
     }
 
     public function authenticate() {
@@ -37,12 +36,6 @@ class Login extends MY_Controller {
     function setSession($para) {
         $this->session->set_userdata('admin_id', $para['id']);
         $this->session->set_userdata('admin_name', $para['name']);
-    }
-
-    public function logout() {
-        $this->session->set_userdata('admin_id', '');
-        $this->session->set_userdata('admin_name', '');
-        redirect(base_url('admin/login'));
     }
 
 }

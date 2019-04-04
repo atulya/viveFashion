@@ -7,7 +7,8 @@ class Home extends MY_Controller {
     }
 
     public function index() {
-        echo 'Home';
+        $data['banner'] = $this->dml->getRow(TBL_BANNER, 'id', 1);
+        $this->frontEnd('index', $data, true);
     }
 
 }

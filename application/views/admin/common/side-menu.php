@@ -10,23 +10,37 @@
             <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
                     <a class="nav-link" href="<?php echo base_url('admin/menus'); ?>">
-                        <i class="fa fa-fw fa-dashboard"></i>
+                        <i class="fa fa-fw fa-medium"></i>
                         <span class="nav-link-text">
                             Menu management</span>
                     </a>
                 </li>
-                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
-                    <a class="nav-link" href="<?php echo base_url('cpanel/inquiry'); ?>">
-                        <i class="fa fa-fw fa-envelope"></i>
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
+                    <a class="nav-link" href="<?php echo base_url('admin/products'); ?>">
+                        <i class="fa fa-fw fa-product-hunt"></i>
                         <span class="nav-link-text">
-                            Inquiries</span>
+                            Product management</span>
                     </a>
                 </li>
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
-                    <a class="nav-link" href="<?php echo base_url('cpanel/profile/password'); ?>">
-                        <i class="fa fa-fw fa-pencil"></i>
+                    <a class="nav-link" href="<?php echo base_url('admin/inquiry'); ?>">
+                        <i class="fa fa-fw fa-envelope"></i>
                         <span class="nav-link-text">
-                            Change my password</span>
+                            Inquiries (<span class="unread_count"><?php echo $unread_count; ?></span>)</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
+                    <a class="nav-link" href="<?php echo base_url('admin/import'); ?>">
+                        <i class="fa fa-fw fa-expand"></i>
+                        <span class="nav-link-text">
+                            Import products</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
+                    <a class="nav-link" href="<?php echo base_url('admin/banner'); ?>">
+                        <i class="fa fa-fw fa-image"></i>
+                        <span class="nav-link-text">
+                            Banner</span>
                     </a>
                 </li>
             </ul>
@@ -51,7 +65,7 @@
                     </form>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="<?php echo base_url('admin/login/logout'); ?>">
+                    <a class="nav-link" href="<?php echo base_url('admin/logout'); ?>">
                         <i class="fa fa-fw fa-sign-out"></i>
                         Logout</a>
                 </li>

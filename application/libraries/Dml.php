@@ -29,7 +29,8 @@ class Dml {
         try {
             $this->CI->db->where($field, $value);
             $this->CI->db->update($table, $para);
-            $data['status'] = ($this->CI->db->affected_rows() > 0) ? TRUE : FALSE;
+            $data['id'] = $value;
+            $data['status'] = ($this->CI->db->affected_rows() >= 0) ? TRUE : FALSE;
         } catch (Exception $ex) {
             log_message('error', $e->getMessage() . ' in ' . $e->getFile() . ':' . $e->getLine());
         }
@@ -45,7 +46,23 @@ class Dml {
     }
 
     //This will return you a row object of given $table, $filed and $value
-    public function row($table, $field, $value) {
+    public function getRow($table, $field, $value) {
+        $columns = "";
+        $fields = $this->CI->db->list_fields($table);
+        $columns = array_diff($fields, array('is_deleted', 'modified_on', 'password'));
+        $fields = "";
+        $fields = implode(',', $columns);
+
+        $this->CI->db->select($fields);
+        $this->CI->db->from($table);
+        $this->CI->db->where($field, $value);
+        $this->CI->db->limit(1);
+        $que = $this->CI->db->get();
+        return $que->row_array();
+    }
+
+    //This will return you a result object of given $table, $filed and $value
+    public function get($table, $field, $value) {
         $columns = "";
         $fields = $this->CI->db->list_fields($table);
         $columns = array_diff($fields, array('is_deleted', 'added_on', 'modified_on', 'password'));
@@ -55,34 +72,7 @@ class Dml {
         $this->CI->db->select($fields);
         $this->CI->db->from($table);
         $this->CI->db->where($field, $value);
-        $this->CI->db->where('is_deleted', NOT_DELETED);
-        $que = $this->CI->db->get();
-        return $que->row();
-    }
-
-    //This will return you a result object of given $table, $filed and $value
-    public function get($table, $para = array(), $order = array(), $offset = 0) {
-        $columns = "";
-        $fields = $this->CI->db->list_fields($table);
-        $columns = array_diff($fields, array('status', 'is_deleted', 'added_on', 'modified_on', 'password'));
-        $fields = "";
-        $fields = implode(',', $columns);
-
-        $this->CI->db->select($fields);
-        $this->CI->db->from($table);
-        foreach ($para as $field => $value) {
-            $this->CI->db->where($field, $value);
-        }
-        $this->CI->db->where('status', ACTIVE);
-        $this->CI->db->where('is_deleted', NOT_DELETED);
-        if (!empty($order)) {
-            $this->CI->db->order_by($order['field'], $order['order']);
-        }
-        if (!empty($offset)) {
-            $this->CI->db->limit(20, $offset);
-        }
-        $que = $this->CI->db->get();
-        return $que->result();
+        return $this->CI->db->get()->result_array();
     }
 
     //This will return the count of given $table, $field and $value

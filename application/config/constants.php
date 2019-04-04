@@ -89,3 +89,7 @@ defined('PROJECT_NAME')         OR define('PROJECT_NAME', 'Vive Fashion');
 // Database tables
 defined('TBL_ADMIN')            OR define('TBL_ADMIN', 'admins');
 defined('TBL_MENU_LINKS')       OR define('TBL_MENU_LINKS', 'menu_links');
+defined('TBL_PRODUCTS')         OR define('TBL_PRODUCTS', 'products');
+defined('TBL_PRODUCT_IMAGES')   OR define('TBL_PRODUCT_IMAGES', 'product_images');
+defined('TBL_INQUIRY')          OR define('TBL_INQUIRY', 'inquiries');
+defined('TBL_BANNER')           OR define('TBL_BANNER', 'banner');

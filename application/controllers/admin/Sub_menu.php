@@ -5,7 +5,8 @@ class Sub_menu extends MY_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->library(array('form_validation', 'pagination'));
-        $this->load->helper('get_designed_message');
+        $this->load->helper(array('get_designed_message', 'check_session', 'create_permalink'));
+        isLoggedIn();
     }
 
     public function index() {
@@ -25,6 +26,7 @@ class Sub_menu extends MY_Controller {
 
     public function save($main_menu_id = 0) {
         $params['name'] = $this->input->post('sub_menu_name');
+        $params['permalink'] = createPermaLink($params['name']);
         $menu_id = $this->input->post('menu_id');
         $result = $this->dml->update(TBL_MENU_LINKS, 'menu_id', $menu_id, $params);
 
@@ -34,7 +36,7 @@ class Sub_menu extends MY_Controller {
             $message = getDesignedMessage('Something wrong happened, Please try again.', 2);
         }
         $this->session->set_flashdata('message', $message);
-        redirect(base_url('admin/sub_menu/index/'.$main_menu_id));
+        redirect(base_url('admin/sub_menu/index/' . $main_menu_id));
     }
 
 }

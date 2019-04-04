@@ -10,16 +10,34 @@ class MY_Controller extends CI_Controller {
     }
 
     public function backEnd($common, $data = array(), $return = FALSE) {
+        $this->load->model('admin/inquiry_model');
+        $nav['unread_count'] = $this->inquiry_model->getUnreadCount();
         if ($return):
             $this->load->view('admin/common/header');
-            $this->load->view('admin/common/side-menu');
+            $this->load->view('admin/common/side-menu', $nav);
             $this->load->view($common, $data);
             $this->load->view('admin/common/footer');
         else:
             $this->load->view('admin/common/header');
-            $this->load->view('admin/common/side-menu');
+            $this->load->view('admin/common/side-menu', $nav);
             $this->load->view($common);
             $this->load->view('admin/common/footer');
+        endif;
+    }
+
+    public function frontEnd($common, $data = array(), $return = FALSE) {
+        $this->load->model('menu_model');
+        $nav['menus'] = $this->menu_model->get();
+        if ($return):
+            $this->load->view('common/header');
+            $this->load->view('common/navigation', $nav);
+            $this->load->view($common, $data);
+            $this->load->view('common/footer');
+        else:
+            $this->load->view('common/header');
+            $this->load->view('common/navigation', $nav);
+            $this->load->view($common);
+            $this->load->view('common/footer');
         endif;
     }
 

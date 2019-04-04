@@ -5,7 +5,8 @@ class Menus extends MY_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->library(array('form_validation', 'pagination'));
-        $this->load->helper('get_designed_message');
+        $this->load->helper(array('get_designed_message', 'check_session', 'create_permalink'));
+        isLoggedIn();
     }
 
     public function index() {
@@ -23,6 +24,7 @@ class Menus extends MY_Controller {
 
     public function save() {
         $params['name'] = $this->input->post('menu_name');
+        $params['permalink'] = createPermaLink($params['name']);
         $menu_id = $this->input->post('menu_id');
         if (empty($menu_id)) { // Add
             $result = $this->dml->insert(TBL_MENU_LINKS, $params);
@@ -41,6 +43,7 @@ class Menus extends MY_Controller {
 
     public function save_sub_menu() {
         $params['name'] = $this->input->post('sub_menu_name');
+        $params['permalink'] = createPermaLink($params['name']);
         $params['parent_id'] = $this->input->post('menu_id');
         $result = $this->dml->insert(TBL_MENU_LINKS, $params);
         if ($result['status']) { // Success
